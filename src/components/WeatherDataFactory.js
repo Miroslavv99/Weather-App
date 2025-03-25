@@ -2,14 +2,14 @@ import { WeatherData } from "./WeatherData";
 import { WeeklyData } from "./WeatherData";
 
 export class WeatherDataFactory {
-  constructor(weatherService, selectIcon) {
+  constructor(dataService, selectIcon) {
     this.selectIcon = selectIcon;
-    this.weatherService = weatherService;
+    this.dataService = dataService;
   }
 
   async createWeatherData(url) {
     try {
-      const data = await this.weatherService.getApiData(url);
+      const data = await this.dataService.getApiData(url);
       const weatherObject = new WeatherData(
         data.resolvedAddress.split(",")[0],
         data.resolvedAddress.split(",")[1],
@@ -27,7 +27,7 @@ export class WeatherDataFactory {
 
   async createWeeklyWeatherData(url) {
     try {
-      const data = await this.weatherService.getApiData(url);
+      const data = await this.dataService.getApiData(url);
       const weeklyArray = data.days.map((day) => {
         const weatherObject = new WeeklyData(
           this.selectIcon.getIcon(day.icon),
@@ -38,6 +38,9 @@ export class WeatherDataFactory {
         return weatherObject;
       });
       return weeklyArray;
-    } catch {}
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 }
