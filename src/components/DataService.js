@@ -1,4 +1,4 @@
-export class WeatherService {
+export class DataService {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
