@@ -12,7 +12,7 @@ export class FormHandler {
 
       const cityValue = cityInput.value;
 
-      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityValue}?unitGroup=metric&key=ARXRWGKP6GYRWFHS4Q73E3FAP&contentType=json`;
+      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityValue}?unitGroup=metric&key=3FE8XQ2ASVBX4KYRDQAP5UJY8&contentType=json`;
 
       try {
         await this.renderer.renderWeatherCard(url);
