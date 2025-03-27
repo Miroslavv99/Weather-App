@@ -1,24 +1,26 @@
 import "../public/styles.css";
 
-import { WeatherService } from "./components/WeatherService";
+import { DataService } from "./components/DataService";
 import { Renderer } from "./components/Renderer";
 import { SelectIcon } from "./components/IconSelector";
-import { WeatherDataFactory } from "./components/WeatherDataFactory";
-import { WeatherData } from "./components/WeatherData";
+import { WeatherDataManager } from "./components/WeatherDataManager";
+import { FormHandler } from "./components/FormHandler";
 
-const cityInput = document.querySelector("#city-input");
-const searchButton = document.querySelector("#search-button");
-
-const weatherService = new WeatherService();
+const dataService = new DataService();
 const selectIcon = new SelectIcon();
-const weatherData = new WeatherData();
-const weatherDataFactory = new WeatherDataFactory(weatherService, selectIcon);
-const renderer = new Renderer(weatherDataFactory);
+const weatherDataManager = new WeatherDataManager(dataService, selectIcon);
+const renderer = new Renderer(weatherDataManager);
+const formHandler = new FormHandler(renderer);
 
-searchButton.addEventListener("click", () => {
-  const inputValue = cityInput.value;
+document.addEventListener("DOMContentLoaded", () => {
+  formHandler.handleSearch();
+});
 
-  renderer.renderWeatherCard(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${inputValue}?unitGroup=metric&key=ARXRWGKP6GYRWFHS4Q73E3FAP&contentType=json`
-  );
+document.addEventListener("DOMContentLoaded", () => {
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London?unitGroup=metric&key=3FE8XQ2ASVBX4KYRDQAP5UJY8&contentType=json`;
+
+  try {
+    renderer.renderWeatherCard(url);
+    renderer.renderWeeklyForecast(url);
+  } catch {}
 });
