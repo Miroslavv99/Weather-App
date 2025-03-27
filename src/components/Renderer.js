@@ -1,18 +1,43 @@
 export class Renderer {
-  constructor(weatherDataFactory) {
-    this.weatherDataFactory = weatherDataFactory;
+  constructor(weatherDataManager) {
+    this.weatherDataManager = weatherDataManager;
   }
 
   async renderWeatherCard(url) {
-    const weatherCard = document.querySelector(".weather-card");
-    weatherCard.innerHTML = "";
+    const weatherHeader = document.querySelector(".weather-header");
+    weatherHeader.innerHTML = "";
+    const weatherFooter = document.querySelector(".weather-footer");
+    weatherFooter.innerHTML = "";
 
     try {
-      const weatherData = await this.weatherDataFactory.createWeatherData(url);
+      const weatherData = await this.weatherDataManager.createWeatherData(url);
+
+      const city = document.createElement("span");
+      city.classList.add("city");
+      city.textContent = weatherData.city;
+      weatherHeader.appendChild(city);
+
+      const country = document.createElement("span");
+      country.classList.add("country");
+      country.textContent = weatherData.country;
+      weatherHeader.appendChild(country);
+
+      const tempContainer = document.createElement("div");
+      tempContainer.classList.add("temp-container");
+      weatherHeader.appendChild(tempContainer);
+
+      const temperature = document.createElement("span");
+      temperature.classList.add("temperature");
+      temperature.textContent = weatherData.temperature;
+      tempContainer.appendChild(temperature);
+
+      const weatherIcon = weatherData.icon;
+      weatherIcon.classList.add("weather-icon");
+      tempContainer.appendChild(weatherIcon);
 
       const temperatureSwitch = document.createElement("div");
       temperatureSwitch.classList.add("temp-switch");
-      weatherCard.appendChild(temperatureSwitch);
+      tempContainer.appendChild(temperatureSwitch);
 
       const celsius = document.createElement("button");
       celsius.classList.add("celsius");
@@ -24,39 +49,6 @@ export class Renderer {
       fahrenheit.textContent = "F";
       temperatureSwitch.appendChild(fahrenheit);
 
-      const city = document.createElement("span");
-      city.classList.add("city");
-      city.textContent = weatherData.city;
-      weatherCard.appendChild(city);
-
-      const country = document.createElement("span");
-      country.classList.add("country");
-      country.textContent = weatherData.country;
-      weatherCard.appendChild(country);
-
-      const tempContainer = document.createElement("div");
-      tempContainer.classList.add("temp-container");
-      weatherCard.appendChild(tempContainer);
-
-      const weatherIcon = weatherData.icon;
-      weatherIcon.classList.add("weather-icon");
-      tempContainer.appendChild(weatherIcon);
-
-      const conditions = document.createElement("span");
-      conditions.classList.add("conditions");
-      conditions.textContent = weatherData.conditions;
-      weatherCard.appendChild(conditions);
-
-      const temperature = document.createElement("span");
-      temperature.classList.add("temperature");
-      temperature.textContent = weatherData.temperature;
-      tempContainer.appendChild(temperature);
-
-      const description = document.createElement("span");
-      description.classList.add("description");
-      description.textContent = weatherData.description;
-      weatherCard.appendChild(description);
-
       celsius.addEventListener("click", () => {
         temperature.textContent = weatherData.temperature;
       });
@@ -66,39 +58,125 @@ export class Renderer {
           weatherData.temperature
         )}F`;
       });
+
+      const sunriseImg = document.createElement("img");
+      sunriseImg.classList.add("footer-img");
+      sunriseImg.src = "./images/sunrise.svg";
+      weatherFooter.appendChild(sunriseImg);
+
+      const sunriseContainer = document.createElement("div");
+      sunriseContainer.classList.add("info-container");
+      weatherFooter.appendChild(sunriseContainer);
+
+      const sunriseTitle = document.createElement("h2");
+      sunriseTitle.textContent = "sunrise";
+      sunriseContainer.appendChild(sunriseTitle);
+
+      const sunrise = document.createElement("span");
+      sunrise.textContent = weatherData.sunrise;
+      sunriseContainer.appendChild(sunrise);
+
+      const sunsetImg = document.createElement("img");
+      sunsetImg.classList.add("footer-img");
+      sunsetImg.src = "./images/sunset.svg";
+      weatherFooter.appendChild(sunsetImg);
+
+      const sunsetContainer = document.createElement("div");
+      sunsetContainer.classList.add("info-container");
+      weatherFooter.appendChild(sunsetContainer);
+
+      const sunsetTitle = document.createElement("h2");
+      sunsetTitle.textContent = "sunset";
+      sunsetContainer.appendChild(sunsetTitle);
+
+      const sunset = document.createElement("span");
+      sunset.textContent = weatherData.sunset;
+      sunsetContainer.appendChild(sunset);
+
+      const humidityImg = document.createElement("img");
+      humidityImg.classList.add("footer-img");
+      humidityImg.src = "./images/humidity.svg";
+      weatherFooter.appendChild(humidityImg);
+
+      const humidityContainer = document.createElement("div");
+      humidityContainer.classList.add("info-container");
+      weatherFooter.appendChild(humidityContainer);
+
+      const humidityTitle = document.createElement("h2");
+      humidityTitle.textContent = "humidity";
+      humidityContainer.appendChild(humidityTitle);
+
+      const humidity = document.createElement("span");
+      humidity.textContent = weatherData.humidity;
+      humidityContainer.appendChild(humidity);
+
+      const windSpeedImg = document.createElement("img");
+      windSpeedImg.classList.add("footer-img");
+      windSpeedImg.src = "./images/windy.svg";
+      weatherFooter.appendChild(windSpeedImg);
+
+      const windSpeedContainer = document.createElement("div");
+      windSpeedContainer.classList.add("info-container");
+      weatherFooter.appendChild(windSpeedContainer);
+
+      const windSpeedTitle = document.createElement("h2");
+      windSpeedTitle.textContent = "wind speed";
+      windSpeedContainer.appendChild(windSpeedTitle);
+
+      const windSpeed = document.createElement("span");
+      windSpeed.textContent = weatherData.windspeed;
+      windSpeedContainer.appendChild(windSpeed);
     } catch (error) {
       console.error(error);
     }
   }
 
   async renderWeeklyForecast(url) {
-    const weeklyWeather = document.querySelector(".weekly-weather");
-    weeklyWeather.innerHTML = "";
+    const weatherBody = document.querySelector(".weather-body");
+    weatherBody.innerHTML = "";
+
+    const weatherTrack = document.createElement("div");
+    weatherTrack.classList.add("weather-track");
+    weatherBody.appendChild(weatherTrack);
 
     try {
-      const weeklyData = await this.weatherDataFactory.createWeeklyWeatherData(
+      const weeklyData = await this.weatherDataManager.createWeeklyWeatherData(
         url
       );
 
       weeklyData.forEach((data) => {
         const weatherCard = document.createElement("div");
-        weatherCard.classList.add("card");
-        weeklyWeather.appendChild(weatherCard);
+        weatherCard.classList.add("weekly-card");
+        weatherTrack.appendChild(weatherCard);
+
+        const date = document.createElement("span");
+        date.classList.add("date");
+        date.textContent = data.date.split(",");
+        weatherCard.appendChild(date);
+
+        const conditions = document.createElement("span");
+        conditions.classList.add("conditions");
+        conditions.textContent = data.conditions;
+        weatherCard.appendChild(conditions);
 
         const weatherIcon = data.icon;
         weatherCard.appendChild(weatherIcon);
 
-        const conditions = document.createElement("span");
-        conditions.textContent = data.conditions;
-        weatherCard.appendChild(conditions);
+        const rangeContainer = document.createElement("div");
+        rangeContainer.classList.add("range-container");
+        weatherCard.appendChild(rangeContainer);
 
-        const temperature = document.createElement("span");
-        temperature.textContent = data.temperature;
-        weatherCard.appendChild(temperature);
+        const tempMin = document.createElement("span");
+        tempMin.textContent = `${data.tempMin}°`;
+        rangeContainer.appendChild(tempMin);
 
-        const description = document.createElement("span");
-        description.textContent = data.description;
-        weatherCard.appendChild(description);
+        const range = document.createElement("div");
+        range.classList.add("temp-range");
+        rangeContainer.appendChild(range);
+
+        const tempMax = document.createElement("span");
+        tempMax.textContent = `${data.tempMax}°`;
+        rangeContainer.appendChild(tempMax);
       });
     } catch (error) {
       console.error(error);
