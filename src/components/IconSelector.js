@@ -5,8 +5,10 @@ export class SelectIcon {
 
     switch (icon) {
       case "partly-cloudy-night":
+        weatherImg.src = "/images/cloudy-night.svg";
+        break;
       case "partly-cloudy-day":
-        weatherImg.src = "/images/cloudy.svg";
+        weatherImg.src = "/images/partly-cloudy.svg";
         break;
 
       case "cloudy":
@@ -16,9 +18,11 @@ export class SelectIcon {
 
       case "rain":
       case "showers-day":
-      case "showers-night":
         weatherImg.src = "/images/rainy.svg";
         break;
+
+      case "showers-night":
+        weatherImg.src = "/images/rainy.svg";
 
       case "fog":
         weatherImg.src = "/images/fog.svg";
@@ -33,7 +37,7 @@ export class SelectIcon {
       case "thunder-rain":
       case "thunder-showers-day":
       case "thunder-showers-night":
-        weatherImg.src = "/images/thunder-rain.svg";
+        weatherImg.src = "/images/thunderstorm.svg";
         break;
 
       case "clear-day":
