@@ -1,19 +1,31 @@
 export class WeatherData {
-  constructor(city, country, icon, conditions, temperature, description) {
+  constructor(
+    city,
+    country,
+    icon,
+    temperature,
+    sunrise,
+    sunset,
+    humidity,
+    windspeed
+  ) {
     this.city = city;
     this.country = country;
     this.icon = icon;
-    this.conditions = conditions;
     this.temperature = temperature;
-    this.description = description;
+    this.sunrise = sunrise;
+    this.sunset = sunset;
+    this.humidity = humidity;
+    this.windspeed = windspeed;
   }
 }
 
 export class WeeklyData {
-  constructor(icon, conditions, temperature, description) {
+  constructor(date, icon, conditions, tempMin, tempMax) {
+    this.date = date;
     this.icon = icon;
     this.conditions = conditions;
-    this.temperature = temperature;
-    this.description = description;
+    this.tempMin = tempMin;
+    this.tempMax = tempMax;
   }
 }
