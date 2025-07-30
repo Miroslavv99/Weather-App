@@ -1,16 +1,11 @@
 export class DataService {
-  constructor(apiKey) {
-    this.apiKey = apiKey;
-  }
-  async getApiData(url) {
+  async fetchJson(url) {
     try {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`An error has occurred: ${response.status}`);
       }
-      const data = await response.json();
-      console.log(data);
-      return data;
+      return response.json();
     } catch (error) {
       console.error(error);
       throw error;

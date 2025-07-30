@@ -1,26 +1,27 @@
 import "../public/styles.css";
 
-import { DataService } from "./components/DataService";
+import { DataService } from "./components/services/DataService";
+import { WeatherService } from "./components/services/WeatherService";
+import { WeatherRepository } from "./components/repositories/WeatherRepository";
 import { Renderer } from "./components/Renderer";
 import { SelectIcon } from "./components/IconSelector";
-import { WeatherDataManager } from "./components/WeatherDataManager";
 import { FormHandler } from "./components/FormHandler";
 
 const dataService = new DataService();
 const selectIcon = new SelectIcon();
-const weatherDataManager = new WeatherDataManager(dataService, selectIcon);
-const renderer = new Renderer(weatherDataManager);
+const weatherRepository = new WeatherRepository(
+  dataService,
+  "3FE8XQ2ASVBX4KYRDQAP5UJY8"
+);
+const weatherService = new WeatherService(weatherRepository, selectIcon);
+const renderer = new Renderer(weatherService);
 const formHandler = new FormHandler(renderer);
 
-document.addEventListener("DOMContentLoaded", () => {
-  formHandler.handleSearch();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London?unitGroup=metric&key=3FE8XQ2ASVBX4KYRDQAP5UJY8&contentType=json`;
-
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-    renderer.renderWeatherCard(url);
-    renderer.renderWeeklyForecast(url);
-  } catch {}
+    await renderer.renderWeatherCard("London");
+    await renderer.renderWeeklyForecast("London");
+  } catch (error) {
+    console.error(error);
+  }
 });

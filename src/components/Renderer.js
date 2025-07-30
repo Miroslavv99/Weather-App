@@ -1,21 +1,21 @@
 export class Renderer {
-  constructor(weatherDataManager) {
-    this.weatherDataManager = weatherDataManager;
+  constructor(weatherService) {
+    this.weatherService = weatherService;
   }
 
-  async renderWeatherCard(url) {
+  async renderWeatherCard(city) {
     const weatherHeader = document.querySelector(".weather-header");
     weatherHeader.innerHTML = "";
     const weatherFooter = document.querySelector(".weather-footer");
     weatherFooter.innerHTML = "";
 
     try {
-      const weatherData = await this.weatherDataManager.createWeatherData(url);
+      const weatherData = await this.weatherService.createWeatherData(city);
 
-      const city = document.createElement("span");
-      city.classList.add("city");
-      city.textContent = weatherData.city;
-      weatherHeader.appendChild(city);
+      const cityName = document.createElement("span");
+      cityName.classList.add("city");
+      cityName.textContent = weatherData.city;
+      weatherHeader.appendChild(cityName);
 
       const country = document.createElement("span");
       country.classList.add("country");
@@ -131,7 +131,7 @@ export class Renderer {
     }
   }
 
-  async renderWeeklyForecast(url) {
+  async renderWeeklyForecast(city) {
     const weatherBody = document.querySelector(".weather-body");
     weatherBody.innerHTML = "";
 
@@ -140,8 +140,8 @@ export class Renderer {
     weatherBody.appendChild(weatherTrack);
 
     try {
-      const weeklyData = await this.weatherDataManager.createWeeklyWeatherData(
-        url
+      const weeklyData = await this.weatherService.createWeeklyWeatherData(
+        city
       );
 
       weeklyData.forEach((data) => {

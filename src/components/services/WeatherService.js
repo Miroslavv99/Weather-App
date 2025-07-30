@@ -1,15 +1,15 @@
-import { WeatherData } from "./WeatherData";
-import { WeeklyData } from "./WeatherData";
+import { WeatherData } from "../WeatherData";
+import { WeeklyData } from "../WeatherData";
 
-export class WeatherDataManager {
-  constructor(dataService, selectIcon) {
+export class WeatherService {
+  constructor(weatherRepository, selectIcon) {
     this.selectIcon = selectIcon;
-    this.dataService = dataService;
+    this.weatherRepository = weatherRepository;
   }
 
-  async createWeatherData(url) {
+  async createWeatherData(city) {
     try {
-      const data = await this.dataService.getApiData(url);
+      const data = await this.weatherRepository.getWeather(city);
       const weatherObject = new WeatherData(
         data.resolvedAddress.split(",")[0],
         data.resolvedAddress.split(",")[
@@ -29,9 +29,9 @@ export class WeatherDataManager {
     }
   }
 
-  async createWeeklyWeatherData(url) {
+  async createWeeklyWeatherData(city) {
     try {
-      const data = await this.dataService.getApiData(url);
+      const data = await this.weatherRepository.getWeather(city);
       const weeklyArray = data.days.map((day) => {
         const weatherObject = new WeeklyData(
           new Date(day.datetime).toLocaleDateString("en", {

@@ -1,6 +1,7 @@
 export class FormHandler {
   constructor(renderer) {
     this.renderer = renderer;
+    this.handleSearch();
   }
 
   handleSearch() {
@@ -12,14 +13,13 @@ export class FormHandler {
 
       const cityValue = cityInput.value;
 
-      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityValue}?unitGroup=metric&key=3FE8XQ2ASVBX4KYRDQAP5UJY8&contentType=json`;
-
       try {
-        await this.renderer.renderWeatherCard(url);
-        await this.renderer.renderWeeklyForecast(url);
+        await this.renderer.renderWeatherCard(cityValue);
+        await this.renderer.renderWeeklyForecast(cityValue);
       } catch (error) {
         console.error(error);
       }
+      cityForm.reset();
     });
   }
 }
