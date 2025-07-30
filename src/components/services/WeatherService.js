@@ -15,7 +15,7 @@ export class WeatherService {
         data.resolvedAddress.split(",")[
           data.resolvedAddress.split(",").length - 1
         ],
-        this.selectIcon.getIcon(data.currentConditions.icon),
+        this.selectIcon.getIconPath(data.currentConditions.icon),
         `${Math.round(data.currentConditions.temp)}°`,
         `${data.currentConditions.sunrise.slice(0, 5)}`,
         data.currentConditions.sunset.slice(0, 5),
@@ -37,7 +37,7 @@ export class WeatherService {
           new Date(day.datetime).toLocaleDateString("en", {
             weekday: "long",
           }),
-          this.selectIcon.getIcon(day.icon),
+          this.selectIcon.getIconPath(day.icon),
           day.conditions,
           Math.round(day.tempmin),
           Math.round(day.tempmax)

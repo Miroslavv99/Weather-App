@@ -31,8 +31,9 @@ export class Renderer {
       temperature.textContent = weatherData.temperature;
       tempContainer.appendChild(temperature);
 
-      const weatherIcon = weatherData.icon;
-      weatherIcon.classList.add("weather-icon");
+      const weatherIcon = document.createElement("img");
+      weatherIcon.classList.add("weather-icon", "weather-img");
+      weatherIcon.src = weatherData.icon;
       tempContainer.appendChild(weatherIcon);
 
       const temperatureSwitch = document.createElement("div");
@@ -159,8 +160,10 @@ export class Renderer {
         conditions.textContent = data.conditions;
         weatherCard.appendChild(conditions);
 
-        const weatherIcon = data.icon;
-        weatherCard.appendChild(weatherIcon);
+        const iconImg = document.createElement("img");
+        iconImg.classList.add("weather-img");
+        iconImg.src = data.icon;
+        weatherCard.appendChild(iconImg);
 
         const rangeContainer = document.createElement("div");
         rangeContainer.classList.add("range-container");

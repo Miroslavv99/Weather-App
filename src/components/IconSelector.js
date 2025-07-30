@@ -1,51 +1,32 @@
 export class SelectIcon {
-  getIcon(icon) {
-    const weatherImg = document.createElement("img");
-    weatherImg.classList.add("weather-img");
-
+  getIconPath(icon) {
     switch (icon) {
       case "partly-cloudy-night":
-        weatherImg.src = "images/cloudy-night.svg";
-        break;
+        return "images/cloudy-night.svg";
       case "partly-cloudy-day":
-        weatherImg.src = "images/partly-cloudy.svg";
-        break;
-
+        return "images/partly-cloudy.svg";
       case "cloudy":
       case "wind":
-        weatherImg.src = "images/cloudy.svg";
-        break;
-
+        return "images/cloudy.svg";
       case "rain":
       case "showers-day":
-        weatherImg.src = "images/rainy.svg";
-        break;
-
       case "showers-night":
-        weatherImg.src = "images/rainy.svg";
-        break;
-
+        return "images/rainy.svg";
       case "fog":
-        weatherImg.src = "images/fog.svg";
-        break;
-
+        return "images/fog.svg";
       case "snow":
       case "snow-showers-day":
       case "snow-showers-night":
-        weatherImg.src = "images/snow.svg";
-        break;
-
+        return "images/snow.svg";
       case "thunder-rain":
       case "thunder-showers-day":
       case "thunder-showers-night":
-        weatherImg.src = "images/thunderstorm.svg";
-        break;
-
+        return "images/thunderstorm.svg";
       case "clear-day":
       case "clear-night":
-        weatherImg.src = "images/sunny.svg";
-        break;
+        return "images/sunny.svg";
+      default:
+        return "images/default.svg";
     }
-    return weatherImg;
   }
 }
